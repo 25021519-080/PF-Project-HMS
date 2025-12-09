@@ -23,4 +23,40 @@ int findStudentByUsername(string username) {
     return -1;
 }
 
+void loadStudents() {
+    ifstream file("students.txt");
+    if (!file.is_open()) {
+        return;
+    }
+    
+    file >> studentCount;
+    file.ignore();
+    
+    for (int i = 0; i < studentCount; i++) {
+        getline(file, students[i].username);
+        getline(file, students[i].fullName);
+        getline(file, students[i].rollNo);
+        getline(file, students[i].degree);
+        file >> students[i].semester;
+        file >> students[i].room;
+        file.ignore();
+    }
+    
+    file.close();
+}
+
+void saveStudents() {
+    ofstream file("students.txt");
+    file << studentCount << endl;
+    for (int i = 0; i < studentCount; i++) {
+        file << students[i].username << endl;
+        file << students[i].fullName << endl;
+        file << students[i].rollNo << endl;
+        file << students[i].degree << endl;
+        file << students[i].semester << endl;
+        file << students[i].room << endl;
+    }
+    file.close();
+}
+
 #endif
