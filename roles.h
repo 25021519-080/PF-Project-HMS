@@ -26,10 +26,6 @@ string getRoleName(int role) {
     return "Unknown";
 }
 
-bool validatePassword(string password) {
-    return password.length() >= 6;
-}
-
 void initializeSystem() {
     ifstream file("user.txt");
     if (!file.is_open()) {
@@ -60,6 +56,20 @@ void loadUsers() {
         file >> users[i].username >> users[i].password >> users[i].role;
     }
     file.close();
+}
+
+bool loginUser() {
+    cout << "Username: ";
+    string username;
+    cin >> username;
+    int idx = findUserByUsername(username);
+    if (idx == -1) {
+        cout << "User not found!" << endl;
+        return false;
+    }
+    loggedUsername = users[idx].username;
+    loggedRole = users[idx].role;
+    return true;
 }
 
 #endif
