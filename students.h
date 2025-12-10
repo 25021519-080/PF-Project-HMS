@@ -7,7 +7,9 @@
 #include "data.h"
 using namespace std;
 
-// Helper function to find student by roll number
+void saveUsers();
+bool isUsernameUnique(string username);
+
 int findStudentByRollNo(string rollNo) {
     for (int i = 0; i < studentCount; i++) {
         if (students[i].rollNo == rollNo) return i;
@@ -15,7 +17,6 @@ int findStudentByRollNo(string rollNo) {
     return -1;
 }
 
-// Helper function to find by username
 int findStudentByUsername(string username) {
     for (int i = 0; i < studentCount; i++) {
         if (students[i].username == username) return i;
@@ -57,6 +58,75 @@ void saveStudents() {
         file << students[i].room << endl;
     }
     file.close();
+}
+
+void admitStudent() {
+    if (studentCount >= MAX_STUDENTS) {
+        cout << "Max students reached!" << endl;
+        return;
+    }
+    
+    cout << "Full Name: ";
+    string fullName;
+    getline(cin, fullName);
+    
+
+    cout << "Username (for login): ";
+    string username;
+    getline(cin, username);
+    
+    if (!isUsernameUnique(username)) {
+        cout << "Username already exists! Please create a unique one." << endl;
+        return;
+    }
+    
+    cout << "Degree: ";
+    string degree;
+    getline(cin, degree);
+    
+    cout << "Semester (1-8): ";
+    int semester;
+    cin >> semester;
+    cin.ignore(1000, '\n');
+    
+    if (semester < 1 || semester > 8) {
+        cout << "Invalid semester! Must be between 1-8." << endl;
+        return;
+    }
+    
+    cout << "Roll Number: ";
+    string rollNo;
+    getline(cin, rollNo);
+    
+    for (int i = 0; i < studentCount; i++) {
+        if (students[i].rollNo == rollNo) {
+            cout << "Student with this roll number already exists!" << endl;
+            return;
+        }
+    }
+    
+    students[studentCount].username = username;
+    students[studentCount].fullName = fullName;
+    students[studentCount].rollNo = rollNo;
+    students[studentCount].degree = degree;
+    students[studentCount].semester = semester;
+    students[studentCount].room = 0;
+    
+    studentCount++;
+    saveStudents();
+    
+    if (userCount < MAX_USERS) {
+        users[userCount].username = username;
+        // password will be set on the login
+        users[userCount].password = "";
+        users[userCount].role = STUDENT;
+        userCount++;
+        saveUsers();
+        cout << "Student admitted! Username: " << username << " | Full Name: " << fullName << " | Role: Student" << endl;
+        cout << "Student will set password on first login." << endl;
+    } else {
+        cout << "Student admitted! But user account could not be created (user limit reached)." << endl;
+    }
 }
 
 #endif
