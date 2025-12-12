@@ -21,16 +21,9 @@ int findRoomByStudent(string username) {
     return -1;
 }
 
-bool isRoomFull(int roomNo) {
-    int idx = findRoomByNumber(roomNo);
-    if (idx == -1) return true;
-    return rooms[idx].occupancy >= 4;
-}
-
 void loadRooms() {
     ifstream file("rooms.txt");
     if (!file.is_open()) return;
-    
     file >> roomCount;
     for (int i = 0; i < roomCount; i++) {
         file >> rooms[i].roomNo >> rooms[i].occupancy;
@@ -52,6 +45,32 @@ void saveRooms() {
         }
     }
     file.close();
+}
+
+void createRoom() {
+    if (roomCount >= MAX_ROOMS) {
+        cout << "Max rooms reached!" << endl;
+        return;
+    }
+    
+    cout << "Room Number: ";
+    int roomNo;
+    cin >> roomNo;
+    cin.ignore();
+    
+    if (findRoomByNumber(roomNo) != -1) {
+        cout << "Room already exists!" << endl;
+        return;
+    }
+    
+    rooms[roomCount].roomNo = roomNo;
+    rooms[roomCount].occupancy = 0;
+    for (int i = 0; i < 4; i++) {
+        rooms[roomCount].students[i] = "";
+    }
+    roomCount++;
+    saveRooms();
+    cout << "Room created!" << endl;
 }
 
 #endif
