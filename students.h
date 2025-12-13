@@ -7,9 +7,15 @@
 #include "data.h"
 using namespace std;
 
+// doorsi header files say functions yahan declaree kiyye
+// so that compiler know these exists
+// i have already explained these fucntons in the main files 
 void saveUsers();
 void saveRooms();
 bool isUsernameUnique(string username);
+
+// Helper function to find student by roll number
+// sirf user index id return kartay yahan
 
 int findStudentByRollNo(string rollNo) {
     for (int i = 0; i < studentCount; i++) {
@@ -18,13 +24,14 @@ int findStudentByRollNo(string rollNo) {
     return -1;
 }
 
+// similar to above function just use username intead of the roll no
 int findStudentByUsername(string username) {
     for (int i = 0; i < studentCount; i++) {
         if (students[i].username == username) return i;
     }
     return -1;
 }
-
+// just like the load users, load rooms
 void loadStudents() {
     ifstream file("students.txt");
     if (!file.is_open()) {
@@ -34,6 +41,7 @@ void loadStudents() {
     file >> studentCount;
     file.ignore();
     
+    // add them in memory
     for (int i = 0; i < studentCount; i++) {
         getline(file, students[i].username);
         getline(file, students[i].fullName);
@@ -47,6 +55,7 @@ void loadStudents() {
     file.close();
 }
 
+// save students from the memory to the file 
 void saveStudents() {
     ofstream file("students.txt");
     file << studentCount << endl;
@@ -61,7 +70,9 @@ void saveStudents() {
     file.close();
 }
 
+// admit students 
 void admitStudent() {
+    // if max reached, dont create more
     if (studentCount >= MAX_STUDENTS) {
         cout << "Max students reached!" << endl;
         return;
@@ -146,6 +157,7 @@ void admitStudent() {
     }
 }
 
+// show data of students from the array index
 void viewStudents() {
     if (studentCount == 0) {
         cout << "No students!" << endl;
@@ -161,6 +173,7 @@ void viewStudents() {
     }
 }
 
+// remove student
 void removeStudent() {
     cout << "Roll Number to remove: ";
     string rollNo;
@@ -247,6 +260,15 @@ void removeStudent() {
     studentCount--;
     saveStudents();
     cout << "Student removed! (User account and room assignment cleaned up)" << endl;
+}
+// get roll number of a student from a username
+string getRollNumberByName(string username) {
+    for (int i = 0; i < studentCount; i++) {
+        if (students[i].username == username) {
+            return students[i].rollNo;
+        }
+    }
+    return "";
 }
 
 #endif
