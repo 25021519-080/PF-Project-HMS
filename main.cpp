@@ -20,10 +20,11 @@ void superAdminMenu() {
         cout << "11. Logout" << endl;
         cout << "Choice: ";
         cin >> choice;
-        cin.ignore(1000, "\\n");
+        cin.ignore(1000, '\n');
         
         if (cin.fail()) {
             cin.clear();
+            cin.ignore(1000, '\n');
             cout << "Invalid input!" << endl;
             continue;
         }
@@ -58,10 +59,11 @@ void managerMenu() {
         cout << "9. Logout" << endl;
         cout << "Choice: ";
         cin >> choice;
-        cin.ignore(1000, "\\n");
+        cin.ignore(1000, '\n');
         
         if (cin.fail()) {
             cin.clear();
+            cin.ignore(1000, '\n');
             cout << "Invalid input!" << endl;
             continue;
         }
@@ -88,16 +90,17 @@ void studentMenu() {
         cout << "3. Logout" << endl;
         cout << "Choice: ";
         cin >> choice;
-        cin.ignore(1000, "\\n");
+        cin.ignore(1000, '\n');
         
         if (cin.fail()) {
             cin.clear();
+            cin.ignore(1000, '\n');
             cout << "Invalid input!" << endl;
             continue;
         }
         
         if (choice == 1) viewProfile();
-        else if (choice == 2) viewMyRoom(loggedUsername);
+        else if (choice == 2) viewMyRoom();
         else if (choice == 3) break;
         else cout << "Invalid choice!" << endl;
     }
@@ -112,6 +115,11 @@ int main() {
     
     while (true) {
         if (loginUser()) {
+            // If student logged in, set their roll number
+            if (loggedRole == 2) {
+                loggedRollNo = getRollNumberByName(loggedUsername);
+            }
+            
             if (loggedRole == 0) superAdminMenu();
             else if (loggedRole == 1) managerMenu();
             else if (loggedRole == 2) studentMenu();
@@ -121,9 +129,9 @@ int main() {
         while (choice != 1 && choice != 2) {
             cout << "\n1. Login Again" << endl;
             cout << "2. Exit" << endl;
-                  userCount--; cout << "Choice: ";
+            cout << "Choice: ";
             cin >> choice;
-            cin.ignore(1000, "\\n");
+            cin.ignore(1000, '\n');
             
             if (choice != 1 && choice != 2) {
                 cout << "Invalid choice! Enter 1 or 2" << endl;
