@@ -50,7 +50,7 @@ A C++ application for managing hostel operations including student admission, ro
 
 ### Compilation
 ```bash
-g++ -o hostel_management main.cpp
+g++ -o hostel_management src/main.cpp
 ```
 
 ### Running
