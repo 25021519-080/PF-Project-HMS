@@ -7,6 +7,26 @@ A C++ application for managing hostel operations including student admission, ro
 
 ---
 
+## Group Members
+
+| Name | Roll No |
+|------|---------|
+| **Sania Meer** | 25021519-078 |
+| **Afaan** | 25021519-080 |
+| **Aman** | 25021519-052 |
+
+---
+
+## Contribution Summary
+
+| Member | Contribution |
+|--------|-------------|
+| **Sania Meer** | Implemented `main.cpp`, handled overall program flow, menus, and role-based logic. Also worked on the `roles.h` module including authentication and permissions. |
+| **Afaan** | Designed and implemented `data.h` and the `students.h` module, including student data structures, admission, and student management logic. |
+| **Aman** | Implemented the `rooms.h` module, including room creation, student assignment, deallocation, and occupancy management. |
+
+---
+
 ## Features
 
 - **Role-based Access Control** - 3 user roles with different permissions
